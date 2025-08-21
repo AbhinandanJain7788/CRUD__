@@ -9,7 +9,7 @@ require("dotenv").config();
 const app = express();
 
 // ✅ Allowed frontend origins
-const allowed = [process.env.FRONTEND_URL, "http://localhost:5173"].filter(Boolean);
+const allowed = [process.env.FRONTEND_URL, "http://localhost:5173",  "https://crud-psi-sage.vercel.app"].filter(Boolean);
 app.use(cors({
   origin: (origin, cb) => {
     if (!origin || allowed.includes(origin)) cb(null, true);

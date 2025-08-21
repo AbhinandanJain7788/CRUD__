@@ -55,7 +55,7 @@ require("dotenv").config();
 
 const app = express();
 
-// ✅ TEMP: Allow all origins (testing mode)
+// ✅ Allow all origins (fix CORS issue for Render + Vercel)
 app.use(cors({
   origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -64,7 +64,7 @@ app.use(cors({
 
 app.use(express.json());
 
-// ✅ Ensure uploads folder exists (for Render disk)
+// ✅ Ensure uploads folder exists (for local dev / Render disk)
 const uploadDir = path.join(__dirname, "uploads");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
@@ -75,7 +75,7 @@ app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/tasks", require("./routes/taskRoutes"));
 app.use("/api/users", require("./routes/userRoutes"));
 
-// ✅ Serve uploaded files
+// ✅ Serve uploaded files (only if using local disk storage)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // DB connect
@@ -85,5 +85,3 @@ mongoose.connect(process.env.MONGO_URI)
     app.listen(PORT, () => console.log(`✅ Server running on ${PORT}`));
   })
   .catch(err => console.error("MongoDB connection error:", err));
-
-console.log("👉 Using Mongo URI:", process.env.MONGO_URI);

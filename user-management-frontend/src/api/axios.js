@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: " https://crud-3-c65l.onrender.com", // backend server
+  baseURL: "https://crud-4-nh1z.onrender.com", // backend server
 });
 
 // Add token automatically if logged in
